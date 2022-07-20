@@ -1,4 +1,4 @@
-const serveboy = require("serverboy")
+const serverboy = require("serverboy")
 const { createCanvas } = require('canvas');
 
 class Gameboy {
@@ -7,14 +7,14 @@ class Gameboy {
         this._fps = 1000 / fps
         this._tickrate = 1000 / tickrate
         this.pause = false
-        this.gameboy = new serveboy();
+        this.gameboy = new serverboy();
     }
     run(frameCallback, tickCallback) {
         const canvas = createCanvas(160, 144)
         const ctx = canvas.getContext("2d");
         
         this.gameboy.loadRom(this.romData);
-        
+
         this.tickFrame = setInterval(async () => {
             if (this.pause) return
             const ctx_data = ctx.createImageData(160, 144);
