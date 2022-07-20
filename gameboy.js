@@ -4,8 +4,8 @@ const { createCanvas } = require('canvas');
 class Gameboy {
     constructor(romData, fps = 60, tickrate = 60) {
         this.romData = romData
-        this.fps = 1000 / fps
-        this.tickrate = 1000 / tickrate
+        this._fps = 1000 / fps
+        this._tickrate = 1000 / tickrate
         this.pause = false
         this.gameboy = new serveboy();
     }
@@ -26,16 +26,15 @@ class Gameboy {
 
             ctx.putImageData(ctx_data, 0, 0);
             tickCallback(this.gameboy)
-        }, this.tickrate);
+        }, this._tickrate);
 
-        this.fpsFrame = setInterval(async () => {
+        this._fpsFrame = setInterval(async () => {
             frameCallback(canvas.toDataURL())
-                //Buffer.from(canvas.toDataURL().split(",").pop(), "base64"))
-        }, this.fps)
+        }, this._fps)
     }
     stop() {
         clearInterval(this.tickFrame)
-        clearInterval(this.fpsFrame)
+        clearInterval(this._fpsFrame)
     }
     pauseResume() {
         this.pause ? this.pause = false : this.pause = true
@@ -46,6 +45,13 @@ class Gameboy {
     loadRom(romData) {
         this.romData = romData
         this.gameboy.loadRom(romData);
+    }
+    set tickrate(tickrate) {
+        this._tickrate = 1000 / tickrate
+        console.log(this._tickrate)
+    }
+    set fps(fps) {
+        this._fps = 1000 / fps
     }
 }
 
