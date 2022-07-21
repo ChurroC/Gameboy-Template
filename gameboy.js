@@ -25,11 +25,11 @@ class Gameboy {
             }
 
             ctx.putImageData(ctx_data, 0, 0);
-            tickCallback(this.gameboy)
+            tickCallback ? tickCallback(this.gameboy) : null
         }, this._tickrate);
 
         this._fpsFrame = setInterval(async () => {
-            frameCallback(canvas.toDataURL())
+            frameCallback ? frameCallback(canvas.toDataURL()) : null
         }, this._fps)
     }
     stop() {
